@@ -23,7 +23,7 @@ CREATE TABLE client (
     FOREIGN KEY (id_client) REFERENCES user(id)
 );
 
--- client coach
+--  coach table
 CREATE TABLE coach (
     id_coach INT PRIMARY KEY,
     biographie TEXT,
@@ -90,7 +90,4 @@ CREATE TABLE disponible (
     heures_fin DATETIME NOT NULL,
     FOREIGN KEY (id_coach) REFERENCES coach(id_coach)
 );
-
-
-
 
