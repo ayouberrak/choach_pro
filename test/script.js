@@ -101,18 +101,30 @@ const coachFields = document.getElementById("coach-fields")
 const clientFields = document.getElementById("client-fields")
 
 if (roleSelect) {
-    roleSelect.addEventListener("change", () => {
-    const role = roleSelect.value
+  roleSelect.addEventListener("change", () => {
+    const selectedRole = roleSelect.value
 
-    if (role === "2") {
+    // Hide both sections first
+    coachFields.classList.remove("active")
+    clientFields.classList.remove("active")
+
+    // Show the appropriate section based on role
+    if (selectedRole === "coach") {
       coachFields.classList.add("active")
-      clientFields.classList.remove("active")
-    } else if (role === "1") {
+      // Make coach fields required
+      document.getElementById("biographie").setAttribute("required", "")
+      document.getElementById("annes-experience").setAttribute("required", "")
+      document.getElementById("certification").setAttribute("required", "")
+      // Remove required from client fields
+      document.getElementById("telephone").removeAttribute("required")
+    } else if (selectedRole === "client") {
       clientFields.classList.add("active")
-      coachFields.classList.remove("active")
-    } else {
-      coachFields.classList.remove("active")
-      clientFields.classList.remove("active")
+      // Make client fields required
+      document.getElementById("telephone").setAttribute("required", "")
+      // Remove required from coach fields
+      document.getElementById("biographie").removeAttribute("required")
+      document.getElementById("annes-experience").removeAttribute("required")
+      document.getElementById("certification").removeAttribute("required")
     }
   })
 }
