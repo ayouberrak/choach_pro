@@ -14,27 +14,42 @@ $roleSelect =selectRoles($conn);
 
 if($_SERVER['REQUEST_METHOD']=== 'POST'){
 
+    $nom = trim($_POST['nom'] ?? '');
+    $prenom = trim($_POST['prenom'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $role = $_POST['roleSelect'] ?? null;
 
-    $nom =$_POST['nom'];
-    $prenom =$_POST['prenom'];
-    $email =$_POST['email'];
-    $password =$_POST['password'];
-    $role =$_POST['role'];
+    $biographie = $_POST['biographie'] ?? '';
+    $annes_exepriances = $_POST['annes_exepriances'] ?? '';
+    $certification = $_POST['certification'] ?? '';
 
-    $biographie =$_POST['biographie'];
-    $annes_exepriances =$_POST['annes_exepriances'];
-    $certification =$_POST['certification'];
-
-    $tel =$_POST['tel'];
+    $tel = $_POST['tel'] ?? '';
     
     $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
-    if(!empty($nom) && !empty($prenom) && !empty($email) && !empty($password_hashed) && !empty($role)){
+    $required = ['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'password' => $password, 'roleSelect' => $role];
+    $missing = [];
+    foreach ($required as $k => $v) {
+        if (empty($v) && $v !== 0 && $v !== '0') {
+            $missing[] = $k;
+        }
+    }
 
-        insertUser($conn,$nom,$prenom,$email,$password_hashed,$role);
-        $id_user = $conn->lastInsertId();
+    if (!empty($missing)) {
+        echo 'Remplir les champs obligatoires: ' . implode(', ', $missing);
+    } else {
 
-        if($role == 2 && !empty($biographie) && !empty($annes_exepriances) && !empty($certification) ){
+        try {
+            $ok = insertUser($conn,$nom,$prenom,$email,$password_hashed,$role);
+            if (!$ok) {
+                $err = $conn->errorInfo();
+                echo 'Insert user failed: ' . json_encode($err);
+                exit;
+            }
+            $id_user = $conn->lastInsertId();
+
+            if($role == 2 && !empty($biographie) && !empty($annes_exepriances) && !empty($certification) ){
 
             $upload_dir = __DIR__ . '/../uploads/';  
 
@@ -61,21 +76,36 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
                 header('Location: signupControllers.php?signup=uploades_nexicte_pas');
                 exit;
             }
+            
 
-            insertCoach($conn,$id_user ,$biographie,$new_image_patch,$annes_exepriances,$certification);
-            header('Location: signupControllers.php?signup=yes');
+            
+            $okCoach = insertCoach($conn,$id_user ,$biographie,$new_image_patch,$annes_exepriances,$certification);
+            if (!$okCoach) {
+                $err = $conn->errorInfo();
+                echo 'Insert coach failed: ' . json_encode($err);
+                exit;
+            }
+            header('Location: login_signupControleur.php?signup=yes');
             exit;
 
         }elseif($role == 1 &&!empty($tel)){
 
-            insertClient($conn,$id_user,$tel);
-            header('Location: signupControllers.php?signup=yes');
+            $okClient = insertClient($conn,$id_user,$tel);
+            if (!$okClient) {
+                $err = $conn->errorInfo();
+                echo 'Insert client failed: ' . json_encode($err);
+                exit;
+            }
+
+            header('Location: login_signupControleur.php?signup=yes');
             exit;
 
 
         }
-    }else{  
-        echo "rempli les champs";
+        } catch (PDOException $e) {
+            echo 'DB error: ' . $e->getMessage();
+            exit;
+        }
     }
 }
 

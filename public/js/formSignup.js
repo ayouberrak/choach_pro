@@ -133,63 +133,71 @@ if (photoInput) {
   })
 }
 
-// Form Submissions
+// Allow the login form to submit normally so server-side auth runs.
 loginForm.addEventListener("submit", (e) => {
-  e.preventDefault()
-
-  const email = document.getElementById("login-email").value
-  const password = document.getElementById("login-password").value
-
-  // Simulate login
-  showModal("Connexion réussie! Bienvenue sur ELITE COACH.")
-
-  // Reset form
-  loginForm.reset()
+  // Intentionally empty — do not call e.preventDefault() so the form posts to the server.
 })
 
-registerForm.addEventListener("submit", (e) => {
-  e.preventDefault()
+// Client-side validation: prevent submission when required fields are empty
+function ensureErrorContainer() {
+  let el = document.getElementById('register-error')
+  if (!el) {
+    el = document.createElement('div')
+    el.id = 'register-error'
+    el.style.color = '#c0392b'
+    el.style.margin = '8px 0'
+    el.style.fontWeight = '600'
+    registerForm.insertAdjacentElement('afterbegin', el)
+  }
+  return el
+}
 
-  const nom = document.getElementById("nom").value
-  const prenom = document.getElementById("prenom").value
-  const email = document.getElementById("register-email").value
-  const password = document.getElementById("register-password").value
-  const role = document.getElementById("role-select").value
-  const terms = document.getElementById("terms").checked
+function clearFormErrors() {
+  const err = document.getElementById('register-error')
+  if (err) err.textContent = ''
+  const fields = ['nom','prenom','register-email','register-password','role-select']
+  fields.forEach(id => {
+    const el = document.getElementById(id)
+    if (el) {
+      el.style.border = ''
+    }
+  })
+}
 
-  if (!terms) {
-    alert("Veuillez accepter les conditions d'utilisation.")
+registerForm.addEventListener('submit', (e) => {
+  clearFormErrors()
+
+  const fields = [
+    { id: 'nom', label: 'Nom' },
+    { id: 'prenom', label: 'Prénom' },
+    { id: 'register-email', label: 'Email' },
+    { id: 'register-password', label: 'Mot de passe' },
+    { id: 'role-select', label: 'Rôle' }
+  ]
+
+  const missing = []
+  for (const f of fields) {
+    const input = document.getElementById(f.id)
+    if (!input) continue
+    const val = (input.type === 'file') ? input.files.length : input.value.trim()
+    if (!val) {
+      missing.push(f)
+      input.style.border = '1px solid #e74c3c'
+    }
+  }
+
+  if (missing.length > 0) {
+    // Prevent submission and show message
+    e.preventDefault()
+    const el = ensureErrorContainer()
+    el.textContent = 'Remplir les champs obligatoires: ' + missing.map(m => m.label).join(', ')
+    // focus first missing
+    const first = document.getElementById(missing[0].id)
+    if (first) first.focus()
     return
   }
 
-  // Collect role-specific data
-  let roleData = {}
-  if (role === "coach") {
-    roleData = {
-      biographie: document.getElementById("biographie").value,
-      photo: document.getElementById("photo").files[0],
-      annesExperience: document.getElementById("annes-experience").value,
-      certification: document.getElementById("certification").value,
-    }
-  } else if (role === "client") {
-    roleData = {
-      telephone: document.getElementById("telephone").value,
-    }
-  }
-
-  // Simulate registration
-  const roleLabel = role === "coach" ? "Coach" : "Client"
-  showModal(`Bienvenue ${prenom} ${nom}! Votre compte ${roleLabel} a été créé avec succès.`)
-
-  // Reset form
-  registerForm.reset()
-  coachFields.classList.remove("active")
-  clientFields.classList.remove("active")
-  if (fileLabel) fileLabel.classList.remove("has-file")
-  if (fileName) fileName.textContent = "Choisir une image..."
-  strengthProgress.className = "strength-progress"
-  strengthProgress.style.width = "0%"
-  strengthText.textContent = "Force du mot de passe"
+  // If all required fields are present, let the form submit to the server (no preventDefault)
 })
 
 // Modal Functions

@@ -1,4 +1,4 @@
-                <form id="login-form" class="auth-form active">
+                <form id="login-form" class="auth-form active" method="POST" action="">
                     <div class="form-header">
                         <h2>Bienvenue</h2>
                         <p>Connectez-vous pour accéder à votre espace coaching</p>
@@ -11,7 +11,7 @@
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                                 <polyline points="22,6 12,13 2,6"/>
                             </svg>
-                            <input type="email" id="login-email" placeholder="votre@email.com" required>
+                            <input type="email" id="login-email" placeholder="votre@email.com" required name="email">
                         </div>
                     </div>
 
@@ -22,7 +22,7 @@
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
-                            <input type="password" id="login-password" placeholder="••••••••" required>
+                            <input type="password" id="login-password" placeholder="••••••••" required name="pass">
                             <button type="button" class="toggle-password">
                                 <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>

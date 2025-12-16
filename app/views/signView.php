@@ -1,4 +1,4 @@
-<form id="register-form" class="auth-form" method="post" enctype="multipart/form-data">
+<form id="register-form" class="auth-form" method="POST" action="" enctype="multipart/form-data">
                     <div class="form-header">
                         <h2>Créer un compte</h2>
                         <p>Commencez votre transformation dès aujourd'hui</p>
