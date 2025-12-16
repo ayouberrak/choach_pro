@@ -12,7 +12,8 @@ $roleSelect =selectRoles($conn);
 
 
 
-if($_SERVER['REQUEST_METHOD']=== 'POST'){
+// Use isset on a required form field to detect submission instead of relying solely on REQUEST_METHOD
+if (isset($_POST['nom'])) {
 
     $nom = trim($_POST['nom'] ?? '');
     $prenom = trim($_POST['prenom'] ?? '');

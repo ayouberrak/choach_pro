@@ -21,3 +21,8 @@ function conect(){
     }
 
 }
+
+// Wrapper to provide a consistent `conn()` helper used across models/controllers
+function conn(){
+    return conect();
+}

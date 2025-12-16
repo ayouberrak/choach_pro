@@ -41,7 +41,7 @@
 
                 <div class="testimonial">
                     <div class="testimonial-avatar">
-                        <img src="/placeholder.svg?height=48&width=48" alt="Client">
+                        <img src="../../public/assests/profiles.jpeg" alt="Client">
                     </div>
                     <div class="testimonial-content">
                         <p>"Le meilleur investissement que j'ai fait pour ma carrière sportive."</p>
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="brand-bg-image">
-                <img src="/placeholder.svg?height=800&width=600" alt="Athlete">
+                <img src="../../public/assests/imageback.jpeg" alt="Athlete">
             </div>
         </div>
 

@@ -1,9 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../config/config.php';
-function conn(){
-    return conect();
-}
 
 function selectRoles($conn){
     $resquet ="SELECT * FROM role";
@@ -24,7 +21,6 @@ function insertUser($conn,$nom,$prenom,$email,$password,$id_role){
     ]);
 }
 
-
 function insertClient($conn,$id_client,$tel){
     $resquet ="INSERT INTO client(id_client,telephone)
                 VALUES(:id_client,:telephone)";
@@ -34,7 +30,6 @@ function insertClient($conn,$id_client,$tel){
             'telephone'=>$tel
     ]);
 }
-
 
 function insertCoach($conn,$id_coach,$biographie,$photo,$annees_experiance,$certification){
     $resquet ="INSERT INTO coach(id_coach,biographie,photo,annees_experiance,certification)
