@@ -45,7 +45,7 @@
                         <a href="#" class="forgot-link">Mot de passe oublié?</a>
                     </div>
 
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" name="login_submit" class="submit-btn" value="1">
                         <span>Se Connecter</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="5" y1="12" x2="19" y2="12"/>

@@ -147,20 +147,14 @@ if (photoInput) {
 
 // Form Submissions
 loginForm.addEventListener("submit", (e) => {
-  e.preventDefault()
+  
 
   const email = document.getElementById("login-email").value
   const password = document.getElementById("login-password").value
-
-  // Simulate login
-  showModal("Connexion réussie! Bienvenue sur ELITE COACH.")
-
-  // Reset form
-  loginForm.reset()
 })
 
 registerForm.addEventListener("submit", (e) => {
-  e.preventDefault()
+  
 
   const nom = document.getElementById("nom").value
   const prenom = document.getElementById("prenom").value
