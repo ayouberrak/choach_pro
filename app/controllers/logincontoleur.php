@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+    
 require_once __DIR__ . '/../models/loginmodel.php';
 require_once __DIR__ . '/../config/config.php';
 
@@ -16,21 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $user = ceckLogin($conn, $email, $password);
-    $message = "";
 
     if (!$user) {
         header("Location: logincontoleur.php?error=invalid");
         exit();
     }
 
-    session_start();
+
     
     $_SESSION['user_id'] = $user['id_user'];
     $_SESSION['user_name'] = $user['nom'];
     $_SESSION['user_role'] = $user['id_role'];
 
+
+
     if ($user['id_role'] == 2) {
-        header("Location: ../views/coachDash.view.php");
+        header("Location: coachDashControleur.php");
         exit();
     } elseif ($user['id_role'] == 1) {
         header("Location: ../views/clientDash.view.php");
