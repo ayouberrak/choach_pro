@@ -15,5 +15,6 @@
     <footer>
         <p>&copy; 2024 FitCoach. Tous droits réservés.</p>
     </footer>
+   <a href="../controllers/logoutContrelleur.php"><button>Déconnexion</button></a>
 </body>
 </html>

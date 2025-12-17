@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if ($user['id_role'] == 2) {
-        header("Location: coachDashControleur.php");
+        header("Location: aceuliControleur.php");
         exit();
     } elseif ($user['id_role'] == 1) {
-        header("Location: ../views/clientDash.view.php");
+        header("Location: aceuliControleur.php");
         exit();
     } else {
         header("Location: logincontoleur.php?error=role");
