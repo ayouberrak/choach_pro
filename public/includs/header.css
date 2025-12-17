@@ -1,0 +1,149 @@
+        :root {
+            --primary: #1ed760; 
+            --bg-dark: #0a0a0a; 
+            --card-bg: #1a1a1a; 
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --nav-bg: rgba(10, 10, 10, 0.98);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            margin: 0;
+            padding-top: 90px;
+        }
+
+        /* --- Navbar Style --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--nav-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            border-bottom: 1px solid #222;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-white);
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .logo span { color: var(--primary); }
+
+        /* Links dial l-west */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            flex: 2;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Underline effect mlli kat-hover */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Profile section f l-imin */
+        .nav-right {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 15px;
+            border-radius: 50px;
+            background: #151515;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .profile-trigger:hover { border-color: var(--primary); background: #1a1a1a; }
+
+        .avatar-circle {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 125%;
+            right: 0;
+            width: 220px;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 15px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            padding: 10px 0;
+        }
+
+        .dropdown-menu.active { display: flex; animation: slideDown 0.3s ease; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-menu a {
+            padding: 12px 20px;
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown-menu a:hover { background: #222; color: var(--primary); }
+
+        .logout-link { border-top: 1px solid #333; color: #ff4d4d !important; margin-top: 5px; }

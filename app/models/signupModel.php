@@ -12,13 +12,17 @@ function insertUser($conn,$nom,$prenom,$email,$password,$id_role){
     $resquet ="INSERT INTO user(nom,prenom,email,password,id_role)
                 VALUES(:nom,:prenom,:email,:password,:id_role)";
     $res =$conn->prepare($resquet);
-    return $res->execute([
+    $ress = $res->execute([
             'nom'=>$nom,
             'prenom'=>$prenom,
             'email'=>$email,
             'password'=>$password,
             'id_role'=>$id_role
     ]);
+        if($ress){
+        return $conn->lastInsertId(); // غادي ترجع id صحيح
+    }
+    return false; 
 }
 
 function insertClient($conn,$id_client,$tel){
@@ -30,6 +34,7 @@ function insertClient($conn,$id_client,$tel){
             'telephone'=>$tel
     ]);
 }
+
 
 function insertCoach($conn,$id_coach,$biographie,$photo,$annees_experiance,$certification){
     $resquet ="INSERT INTO coach(id_coach,biographie,photo,annees_experiance,certification)

@@ -1,113 +1,85 @@
-    <?php
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+require_once __DIR__ . '/../models/signupModel.php';
+require_once __DIR__ . '/../config/config.php';
 
-    require_once __DIR__ . '/../models/signupModel.php';
+$conn = conn();
+$roleSelect = selectRoles($conn);
 
-    $conn =conn();
-    $roleSelect =selectRoles($conn);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $nom     = trim($_POST['nom'] ?? '');
+    $prenom  = trim($_POST['prenom'] ?? '');
+    $email   = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $role    = $_POST['role'] ?? '';
 
+    $biographie = $_POST['biographie'] ?? '';
+    $photo = $_FILES['photo']['name'] ?? '';
+    $annes_exepriances = $_POST['annes_exepriances'] ?? '';
+    $certification = $_POST['certification'] ?? '';
+    $tel = $_POST['tel'] ?? '';
 
-    // Detect registration by checking the register submit button
-    if (isset($_POST['register_submit'])) {
+    if (empty($nom) || empty($prenom) || empty($email) || empty($password) || empty($role)) {
+        header("Location: signupControllers.php?error=empty");
+        exit();
+    }
 
-        $nom = trim($_POST['nom'] ?? '');
-        $prenom = trim($_POST['prenom'] ?? '');
-        $email = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? '';
-        $role = $_POST['roleSelect'] ?? null;
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-        $biographie = $_POST['biographie'] ?? '';
-        $annes_exepriances = $_POST['annes_exepriances'] ?? '';
-        $certification = $_POST['certification'] ?? '';
+    $userId = insertUser($conn,$nom, $prenom, $email, $hashedPassword, $role);
 
-        $tel = $_POST['tel'] ?? '';
-        
-        $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+    if (!$userId) {
+        header("Location: signupControllers.php?error=insertUser");
+        exit();
+    }
 
-        $required = ['nom' => $nom, 'prenom' => $prenom, 'email' => $email, 'password' => $password, 'roleSelect' => $role];
-        $missing = [];
-        foreach ($required as $k => $v) {
-            if (empty($v) && $v !== 0 && $v !== '0') {
-                $missing[] = $k;
-            }
+    if ($role == 2) {
+
+        if (empty($biographie) || empty($annes_exepriances) || empty($certification) || empty($photo)) {
+            header("Location: signupControllers.php?error=coach");
+            exit();
+        }
+        $file_name = pathinfo($_FILES['photo']['name'], PATHINFO_FILENAME);
+        $file_extension = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
+        $alowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array(strtolower($file_extension), $alowed_extensions)) {
+            header("Location: signupControllers.php?error=exetension");
+            exit();
         }
 
-        if (!empty($missing)) {
-            echo 'Remplir les champs obligatoires: ' . implode(', ', $missing);
+        $new_file_name = $file_name . '_' . time() . '.' . $file_extension;
+    $upload_dir = '../../public/uploadss/';
+
+
+        $upload_path = $upload_dir . $new_file_name;
+
+        if(move_uploaded_file($_FILES['photo']['tmp_name'], $upload_path)){
+            insertCoach($conn,$userId, $biographie, $new_file_name, $annes_exepriances, $certification);
         } else {
-
-            try {
-                $ok = insertUser($conn,$nom,$prenom,$email,$password_hashed,$role);
-                if (!$ok) {
-                    $err = $conn->errorInfo();
-                    echo 'Insert user failed: ' . json_encode($err);
-                    exit;
-                }
-                $id_user = $conn->lastInsertId();
-
-                if($role == 2 && !empty($biographie) && !empty($annes_exepriances) && !empty($certification) ){
-
-                $upload_dir = __DIR__ . '/../uploads/';  
-
-                if(empty($_FILES['photo']['tmp_name'])){
-                    header('Location: signupControllers.php?signup=entre_images');
-                    exit;
-                }
-
-
-                $file_name = pathinfo($_FILES['photo']['name'],PATHINFO_FILENAME);
-                $file_path =pathinfo($_FILES['photo']['name'],PATHINFO_EXTENSION);
-                $new_image_patch = $file_name.'_'.date("Ymd_His").".".$file_path;
-
-
-                $allowed_extensions = ['jpg','jpeg','png','gif'];
-                if(!in_array(strtolower($file_path), $allowed_extensions)){
-                    header('Location: signupControllers.php?signup=image_invalid_ex');
-                    exit;
-                }
-
-                $full_path = $upload_dir . $new_image_patch;
-                
-                if(!move_uploaded_file($_FILES['photo']['tmp_name'], $full_path)){
-                    header('Location: signupControllers.php?signup=uploades_nexicte_pas');
-                    exit;
-                }
-                
-
-                
-                $okCoach = insertCoach($conn,$id_user ,$biographie,$new_image_patch,$annes_exepriances,$certification);
-                if (!$okCoach) {
-                    $err = $conn->errorInfo();
-                    echo 'Insert coach failed: ' . json_encode($err);
-                    exit;
-                }
-                header('Location: login_signupControleur.php?signup=yes');
-                exit;
-
-            }elseif($role == 1 &&!empty($tel)){
-
-                $okClient = insertClient($conn,$id_user,$tel);
-                if (!$okClient) {
-                    $err = $conn->errorInfo();
-                    echo 'Insert client failed: ' . json_encode($err);
-                    exit;
-                }
-
-                header('Location: login_signupControleur.php?signup=yes');
-                exit;
-
-
-            }
-            } catch (PDOException $e) {
-                echo 'DB error: ' . $e->getMessage();
-                exit;
-            }
+            die("Upload failed! Check folder permissions, tmp folder & php.ini settings.");
         }
     }
 
-    require_once __DIR__ . '/../views/signView.php';
+    // 👥 CLIENT
+    if ($role == 1) {
+
+        if (empty($tel)) {
+            header("Location: signupControllers.php?error=client");
+            exit();
+        }
+
+        insertClient($conn,$userId,$tel);
+    }
+
+    header("Location: logincontoleur.php?success=1");
+    exit();
+}
+
+// ✅ Affichage seulement en GET
+require_once __DIR__ . '/../views/signView.php';

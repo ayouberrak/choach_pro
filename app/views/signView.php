@@ -1,185 +1,195 @@
-<form id="register-form" class="auth-form" method="POST" action="" enctype="multipart/form-data">
-                    <div class="form-header">
-                        <h2>Créer un compte</h2>
-                        <p>Commencez votre transformation dès aujourd'hui</p>
-                    </div>
 
-                    <div class="input-row">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S'inscrire - FitCoach</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../public/css/signUp.css">
+    <script src="../../public/js/formSignup.js"></script>
+
+</head>
+<body>
+
+    <!-- New split layout wrapper -->
+    <div class="split-container">
+        <!-- Left side - Image -->
+        <div class="image-side">
+            <div class="image-overlay"></div>
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80" alt="Fitness motivation">
+            <div class="image-content">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                            <path d="M5 8H4a4 4 0 0 0 0 8h1"/>
+                            <path d="M8 6v4"/>
+                            <path d="M16 6v4"/>
+                            <path d="M8 14v4"/>
+                            <path d="M16 14v4"/>
+                            <path d="M5 12h14"/>
+                        </svg>
+                    </div>
+                    <span class="brand-name">FitCoach</span>
+                </div>
+                <div class="image-text">
+                    <h2>Transformez votre vie</h2>
+                    <p>Rejoignez des milliers de personnes qui ont atteint leurs objectifs fitness avec nos coachs experts.</p>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Membres actifs</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Coachs certifiés</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right side - Form -->
+        <div class="form-side">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <h1>Créer un compte</h1>
+                    <p class="subtitle">Commencez votre transformation aujourd'hui</p>
+                </div>
+                
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div id="msj_error">
+                        <?php
+                        if (isset($_GET['error'])) {
+                            $error = $_GET['error'];
+                            if ($error === 'empty') {
+                                echo '<p class="error-message">Veuillez remplir tous les champs obligatoires.</p>';
+                            } elseif ($error === 'insertUser') {
+                                echo '<p class="error-message">Erreur lors de la création du compte. Veuillez réessayer.</p>';
+                            } elseif ($error === 'coach') {
+                                echo '<p class="error-message">Veuillez remplir toutes les informations du coach.</p>';
+                            } elseif ($error === 'exetension') {
+                                echo '<p class="error-message">Format de photo non valide. Autorisé: jpg, jpeg, png, gif.</p>';
+                            } elseif ($error === 'client') {
+                                echo '<p class="error-message">Veuillez fournir un numéro de téléphone pour le client.</p>';
+                            }
+                        }
+                        if (isset($_GET['success']) && $_GET['success'] == 1) {
+                            echo '<p class="success-message">Inscription réussie! Vous pouvez maintenant vous connecter.</p>';
+                        }
+                        ?>
+
+                    </div>
+                    <div class="form-row">
                         <div class="input-group">
-                            <label for="nom">Nom</label>
-                            <div class="input-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
-                                </svg>
-                                <input type="text" id="nom" name="nom" placeholder="Dupont" required>
-                            </div>
+                            <label for="nom">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                Nom
+                            </label>
+                            <input type="text" name="nom" id="nom" placeholder="Entrez votre nom" required>
                         </div>
                         <div class="input-group">
-                            <label for="prenom">Prénom</label>
-                            <div class="input-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
-                                </svg>
-                                <input type="text" id="prenom" name="prenom" placeholder="Jean" required>
-                            </div>
+                            <label for="prenom">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                Prénom
+                            </label>
+                            <input type="text" name="prenom" id="prenom" placeholder="Entrez votre prénom" required>
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label for="register-email">Adresse Email</label>
-                        <div class="input-wrapper">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                            <input type="email" id="register-email" name="email" placeholder="votre@email.com" required>
-                        </div>
+
+                        <label for="email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            Email
+                        </label>
+                        <input type="email" name="email" id="email" placeholder="exemple@email.com" required>
                     </div>
 
                     <div class="input-group">
-                        <label for="register-password">Mot de Passe</label>
-                        <div class="input-wrapper">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                            </svg>
-                            <input type="password" id="register-password" name="password" placeholder="Minimum 8 caractères" required>
-                            <button type="button" class="toggle-password">
-                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                    <circle cx="12" cy="12" r="3"/>
-                                </svg>
-                                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                                    <line x1="1" y1="1" x2="23" y2="23"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="password-strength">
-                            <div class="strength-bar">
-                                <div class="strength-progress" id="strength-progress"></div>
-                            </div>
-                            <span class="strength-text" id="strength-text">Force du mot de passe</span>
-                        </div>
+                        <label for="password">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            Mot de passe
+                        </label>
+                        <input type="password" name="password" id="password" placeholder="••••••••" required>
                     </div>
 
                     <div class="input-group">
-                        <label for="role-select">Rôle</label>
-                        <div class="select-wrapper">
-                            <select id="role-select" name="roleSelect" required>
-                                <option value="" selected disabled>Sélectionnez votre rôle</option>
-                                <?php foreach($roleSelect AS $role){ ?>
-                                    <option value="<?= $role['id_role']?>"><?= $role['type_role']?></option>
-                                <?php } ?>
-                            </select>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </div>
+                        <label for="roleSelect">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            Rôle
+                        </label>
+                        <select name="role" id="roleSelect">
+                            <option selected disabled>Choisir votre rôle</option>
+                            <?php foreach($roleSelect AS $role){ ?>
+                                <option value="<?= $role['id_role']?>"><?= $role['type_role']?></option>
+                            <?php } ?>
+                        </select>
                     </div>
 
-                    <div id="coach-fields" class="conditional-fields">
+                    <!-- Section Coach -->
+                    <div id="divCoach" class="role-section">
+                        <div class="section-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                            Informations Coach
+                        </div>
+                        
                         <div class="input-group">
                             <label for="biographie">Biographie</label>
-                            <div class="textarea-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
-                                    <line x1="16" y1="13" x2="8" y2="13"/>
-                                    <line x1="16" y1="17" x2="8" y2="17"/>
-                                </svg>
-                                <textarea id="biographie" name="biographie" placeholder="Décrivez votre parcours et votre expertise..." rows="3"></textarea>
-                            </div>
+                            <textarea name="biographie" id="biographie" placeholder="Décrivez votre parcours et expertise..."></textarea>
                         </div>
-
-                        <div class="input-group">
-                            <label for="photo">Photo de Profil</label>
-                            <div class="file-wrapper">
-                                <input type="file" id="photo" name="photo" accept="image/*">
-                                <div class="file-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                                        <polyline points="21 15 16 10 5 21"/>
-                                    </svg>
-                                    <span id="file-name">Choisir une image...</span>
+                        
+                        <div class="input-group file-input-group">
+                            <label for="photo">Photo de profil</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" name="photo" id="photo" accept="image/*">
+                                <div class="file-input-display">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                                    <span>Choisir une photo</span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="input-row">
+                        
+                        <div class="form-row">
                             <div class="input-group">
-                                <label for="annes-experience">Années d'Expérience</label>
-                                <div class="input-wrapper">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                    <input type="number" id="annes-experience" name="annes_exepriances" min="0" max="50" placeholder="5">
-                                </div>
+                                <label for="annes_exepriances">Années d'expérience</label>
+                                <input type="number" name="annes_exepriances" id="annes_exepriances" placeholder="0" min="0">
                             </div>
                             <div class="input-group">
                                 <label for="certification">Certification</label>
-                                <div class="input-wrapper">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="8" r="7"/>
-                                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
-                                    </svg>
-                                    <input type="text" id="certification" name="certification" placeholder="BPJEPS, DEJEPS...">
-                                </div>
+                                <input type="text" name="certification" id="certification" placeholder="Ex: BPJEPS">
                             </div>
                         </div>
                     </div>
 
-                    <div id="client-fields" class="conditional-fields">
+                    <!-- Section Client -->
+                    <div id="divClient" class="role-section">
+                        <div class="section-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            Informations Client
+                        </div>
                         <div class="input-group">
-                            <label for="telephone">Numéro de Téléphone</label>
-                            <div class="input-wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                                <input type="tel" id="telephone" name="tel" placeholder="+33 6 12 34 56 78">
-                            </div>
+                            <label for="tel">Numéro de téléphone</label>
+                            <input type="tel" name="tel" id="tel" placeholder="+33 6 00 00 00 00">
                         </div>
                     </div>
 
-                    <div class="form-options">
-                        <label class="checkbox-wrapper">
-                            <input type="checkbox" id="terms" required>
-                            <span class="checkmark"></span>
-                            <span>J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a></span>
-                        </label>
-                    </div>
-
-                    <button type="submit" name="register_submit" class="submit-btn" value="1">
-                        <span>Créer Mon Compte</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                            <polyline points="12 5 19 12 12 19"/>
-                        </svg>
+                    <button type="submit" class="submit-btn">
+                        <span>S'inscrire</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </button>
-
-                    <div class="divider">
-                        <span>ou continuer avec</span>
-                    </div>
-
-                    <div class="social-login">
-                        <button type="button" class="social-btn google">
-                            <svg viewBox="0 0 24 24">
-                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                            </svg>
-                            <span>Google</span>
-                        </button>
-                        <button type="button" class="social-btn apple">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                            </svg>
-                            <span>Apple</span>
-                        </button>
-                    </div>
                 </form>
+                
+                <div class="form-footer">
+                    <p>Déjà un compte? <a href="../controllers/logincontoleur.php">Se connecter</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -7,9 +7,11 @@
     define('DB_USER',$env['DB_USER']);
     define('DB_PASS',$env['DB_PASS']);
     
+
+
+
+
 function conect(){
-
-
 
 
     try{
@@ -22,7 +24,7 @@ function conect(){
 
 }
 
-// Wrapper to provide a consistent `conn()` helper used across models/controllers
+
 function conn(){
     return conect();
 }
