@@ -1,4 +1,4 @@
-        * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -329,6 +329,84 @@ form {
   border-bottom: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+/* Login page specific styles */
+.form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-muted);
+  position: relative;
+  padding-left: 28px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.checkbox-wrapper:hover .checkmark {
+  border-color: var(--primary);
+}
+
+.checkbox-wrapper input:checked ~ .checkmark {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-wrapper input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.forgot-link {
+  font-size: 14px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+  color: var(--primary-light);
+}
+
 /* Submit Button */
 .submit-btn {
   display: flex;
@@ -410,7 +488,6 @@ form {
     font-size: 26px;
   }
 }
-
 .error-message{
     color: var(--error);
     font-size: 14px;
