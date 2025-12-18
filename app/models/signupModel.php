@@ -20,7 +20,7 @@ function insertUser($conn,$nom,$prenom,$email,$password,$id_role){
             'id_role'=>$id_role
     ]);
         if($ress){
-        return $conn->lastInsertId(); // غادي ترجع id صحيح
+        return $conn->lastInsertId();
     }
     return false; 
 }

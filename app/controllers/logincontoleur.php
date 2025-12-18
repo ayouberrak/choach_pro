@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if ($user['id_role'] == 2) {
-        header("Location: selectsportControleurs.php");
+        header("Location: coach.conttoleur.php");
         exit();
     } elseif ($user['id_role'] == 1) {
         header("Location: aceuliControleur.php");
@@ -44,12 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 }
-
-
-
-
-
-
 
 
 require_once __DIR__ .'/../views/loginview.php';

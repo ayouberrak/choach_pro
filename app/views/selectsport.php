@@ -147,31 +147,45 @@
         <h1>Hello, Coach! 👋</h1>
         <p>Quelles sont vos spécialités sportives ?</p>
 
-        <form id="sportsForm">
+        <form id="sportsForm" method="POST">
             <div class="sports-grid">
-                <div class="sport-tag" onclick="toggleSport(this)">Musculation</div>
-                <div class="sport-tag" onclick="toggleSport(this)">Cardio Training</div>
-                <div class="sport-tag" onclick="toggleSport(this)">Yoga</div>
-                <div class="sport-tag" onclick="toggleSport(this)">Crossfit</div>
-                <div class="sport-tag" onclick="toggleSport(this)">Boxe</div>
-                <div class="sport-tag" onclick="toggleSport(this)">Natation</div>
-                <div class="sport-tag" onclick="toggleSport(this)">Zumba</div>
+                <?php foreach($sport as $s): ?>
+                    <div class="sport-tag" onclick="toggleSport(this)" data-id="<?= $s['id_sport'] ?>"><?= $s['type']?></div>
+                <?php endforeach ?>
             </div>
 
             <div class="autre-container">
                 <label>Autre discipline (si non listée)</label>
-                <input type="text" class="form-control" placeholder="Ex: Pilates, Karaté..." id="autreInput">
+                <input type="text" class="form-control" placeholder="Ex: Pilates, Karaté..." id="autreInput" name="sport_new">
             </div>
 
-            <button type="button" class="btn-continue" onclick="submitSelection()">Commencer mon aventure</button>
+            <button type="submit" class="btn-continue">Commencer mon aventure</button>
         </form>
     </div>
 
     <script>
         // Fonction bach n-selctionniw les tags
         function toggleSport(element) {
-            element.classList.toggle('selected');
-        }
+    element.classList.toggle('selected');
+
+    let idSport = element.dataset.id;
+
+    fetch("../api/sport.api.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "id_sport_active=" + encodeURIComponent(idSport)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Sports sélectionnés:", data);
+    });
+}
+
+
+
+
 
         // Fonction bach n-jme3o dakshi li khtar
         function submitSelection() {
@@ -183,6 +197,7 @@
                 alert("Veuillez choisir au moins un sport !");
                 return;
             }
+
 
             console.log("Sports choisis:", selectedSports);
             console.log("Autre:", autreSport);

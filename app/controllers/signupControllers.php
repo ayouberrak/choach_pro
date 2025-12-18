@@ -1,5 +1,7 @@
 
 <?php
+session_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -54,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $new_file_name = $file_name . '_' . time() . '.' . $file_extension;
-    $upload_dir = '../../public/uploadss/';
+        $upload_dir = '../../public/uploadss/';
 
 
         $upload_path = $upload_dir . $new_file_name;
@@ -64,9 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             die("Upload failed! Check folder permissions, tmp folder & php.ini settings.");
         }
+
+            $_SESSION['user_id'] = $userId;
+            $_SESSION['user_role'] = $role;
+
+        header("Location: selectsportControleurs.php?success=1");
+        exit();
     }
 
-    // 👥 CLIENT
     if ($role == 1) {
 
         if (empty($tel)) {
@@ -75,10 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         insertClient($conn,$userId,$tel);
+
+        header("Location: logincontoleur.php?success=1");
+        exit();
     }
 
-    header("Location: logincontoleur.php?success=1");
-    exit();
+    
 }
 
 // ✅ Affichage seulement en GET

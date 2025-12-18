@@ -7,6 +7,8 @@ error_reporting(E_ALL);
 require_once __DIR__ ."/../config/config.php";
 require_once __DIR__ ."/../models/coach.model.php";
 require_once __DIR__ .'/../models/seacnes.model.php';
+require_once __DIR__ .'/../models/sport.models.php';
+
 
 $conn = conn();
 
@@ -26,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $heure_debut = $_POST['heure_debut'] ?? null;
     $duree = $_POST['duree'] ?? null;
     $type_sport = $_POST['type_sport'] ?? null;
-    $id_status = 1;
 
     if (!$date_debut || !$heure_debut || !$duree || !$type_sport) {
         die("Tous les champs sont requis.");
@@ -38,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_client,
         $id_coach,
         $type_sport,
-        $id_status,
         $date_debut
     );
 
@@ -49,5 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: reservationControlleurs.php?reserver=no');
     }
 }
+
+$sport = getSportBycoach($id_coach);
+
+
 
 require_once __DIR__ ."/../views/reservation.view.php";

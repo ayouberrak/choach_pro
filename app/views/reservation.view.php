@@ -202,10 +202,10 @@
                     <div class="form-group">
                         <label>Type d'entrainement</label>
                         <select class="form-control" name="type_sport">
-                            <option value="1">Football</option>
-                            <option value="2">Basketball</option>
-                            <option value="3">Musculation</option>
-                            <option value="4">Yoga</option>
+                            <option value="" disabled selected>choisi le sport</option>
+                            <?php foreach($sport as $sp): ?>    
+                                <option value="<?= $sp['sport_id'] ?>"><?= $sp['type'] ?></option>
+                            <?php endforeach?>
                         </select>
                     </div>
                 </div>
