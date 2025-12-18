@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if ($user['id_role'] == 2) {
-        header("Location: aceuliControleur.php");
+        header("Location: selectsportControleurs.php");
         exit();
     } elseif ($user['id_role'] == 1) {
         header("Location: aceuliControleur.php");

@@ -18,9 +18,4 @@ function getCountClient($id_coach){
 }
 
 
-// function getsport(){
-//     $sql = "SELECT * from sport"; 
-// }
-
-
 

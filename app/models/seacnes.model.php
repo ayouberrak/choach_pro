@@ -22,7 +22,7 @@ function insertseances($debut,$duree,$id_client,$id_coach,$id_sport,$id_status,$
 
 function getseances($id_client){
     global $conn;
-    $sql ="SELECT * FROM seances WHERE id_client=:id";
+    $sql ="SELECT CONCAT(u.nom,' ',u.prenom) AS fullname , s.* FROM seances s INNER JOIN user u ON u.id = s.id_coach WHERE s.id_client=:id";
     $stmt= $conn->prepare($sql);
     $stmt->execute([
         'id'=>$id_client

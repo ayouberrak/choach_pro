@@ -7,5 +7,6 @@ if (!isset($_SESSION['user_id']) && $_SESSION['user_role'] != 2) {
 }
 
 
-require_once __DIR__ .'/../views/coachDash.view.php';
+
+require_once __DIR__ .'/../views/selectsport.php';
 ?>

@@ -6,6 +6,8 @@
     <title>FitCoach - Elite Dashboard</title>
     <link rel="stylesheet" href="../../public/includs/header.css">
     <link rel="stylesheet" href="../../public/includs/footer.css">
+        <script src="../../public/js/navbar.js" defer></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
