@@ -7,7 +7,7 @@ $user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'user';
         <div class="nav-links">
             <a href="../controllers/aceuliControleur.php">Accueil</a>
             <a href="../controllers/clientControlleur.php">Nos Coachs</a>
-            <a href="../views/reservation.view.php">Contact</a>
+            <a href="#">Contact</a>
         </div>
 
         <div class="nav-right">
@@ -19,7 +19,7 @@ $user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'user';
                 
                 <div class="dropdown-menu" id="menuContent">
                     <a href="profile.php">👤 Mon Profil</a>
-                    <a href="mes-seances.php">📅 Mes Séances</a>
+                    <a href="mes_seanes.controler.php">📅 Mes Séances</a>
                     <a href="../controllers/logoutContrelleur.php" class="logout-link">🚪 Déconnexion</a>
                 </div>
             </div>

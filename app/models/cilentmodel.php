@@ -10,3 +10,17 @@ function getcoach(){
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+
+function getCountClient($id_coach){
+
+}
+
+
+// function getsport(){
+//     $sql = "SELECT * from sport"; 
+// }
+
+
+

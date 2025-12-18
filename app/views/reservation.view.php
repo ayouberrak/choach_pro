@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réserver votre séance - FitCoach</title>
-        <link rel="stylesheet" href="../../public/includs/header.css">
+    <link rel="stylesheet" href="../../public/includs/header.css">
     <link rel="stylesheet" href="../../public/includs/footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -27,8 +27,6 @@
             padding-top: 100px;
         }
 
-        /* --- Navbar (Same Theme) --- */
-        
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -146,16 +144,23 @@
 </head>
 <body>
 
-    <?php include_once __DIR__ .'/../../public/includs/header.php'; ?>
-
+    <?php require_once __DIR__ .'/../../public/includs/header.php'; ?>
 
     <main class="container">
         <aside class="coach-preview">
-            <img src="https://via.placeholder.com/150" alt="Coach" class="coach-avatar">
-            <h2>Ahmed Benani</h2>
-            <span class="coach-tag">Expert Musculation</span>
-            <p style="color: var(--text-gray); font-size: 0.9rem;">
-                "Ma passion est de vous aider à atteindre la meilleure version de vous-même."
+            <?php 
+                $pathPhoto = (!empty($coach_d['photo']) && file_exists('../../public/uploadss/' .$coach_d['photo']))
+                ? '../../public/uploadss/' . basename($coach_d['photo'])
+                :'../../public/uploadss/default.jpeg'; 
+            ?>
+            <img src="<?= $pathPhoto ?>" alt="Coach" class="coach-avatar">
+            <h2><?= htmlspecialchars($coach_d['nom']).' '. htmlspecialchars($coach_d['prenom']) ?></h2>
+            <span class="coach-tag"><?= htmlspecialchars($coach_d['annees_experiance']) ?> Ans d'Expérience</span>
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 10px;">
+                <?= htmlspecialchars($coach_d['biographie']) ?>
+            </p>
+            <p style="color: var(--primary); font-size: 0.85rem; font-weight: 600;">
+                🏅 <?= htmlspecialchars($coach_d['certification']) ?>
             </p>
             <div class="coach-stats">
                 <div class="stat-item">
@@ -170,50 +175,61 @@
         </aside>
 
         <section class="reservation-form">
-            <h3>Détails de la séance</h3>
-            <form action="process_reservation.php" method="POST">
+            <h3>Réserver votre séance</h3>
+            <form action="" method="POST">
+                
                 <div class="row">
                     <div class="form-group">
-                        <label>Date de la séance</label>
-                        <input type="date" class="form-control" name="date_seance" required>
+                        <label>Date de début</label>
+                        <input type="date" class="form-control" name="date_debut" required>
                     </div>
                     <div class="form-group">
-                        <label>Heure</label>
-                        <input type="time" class="form-control" name="heure_seance" required>
+                        <label>Heure de début</label>
+                        <input type="time" class="form-control" name="heure_debut" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label>Durée de la séance</label>
+                        <select class="form-control" name="duree" required>
+                            <option value="30">30 min</option>
+                            <option value="60" selected>1 heure</option>
+                            <option value="90">1h 30 min</option>
+                            <option value="120">2 heures</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Type d'entrainement</label>
+                        <select class="form-control" name="type_sport">
+                            <option value="1">Football</option>
+                            <option value="2">Basketball</option>
+                            <option value="3">Musculation</option>
+                            <option value="4">Yoga</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Type d'entrainement</label>
-                    <select class="form-control" name="type_sport">
-                        <option>Musculation / Fitness</option>
-                        <option>Cardio Training</option>
-                        <option>Yoga / Mobilité</option>
-                        <option>Perte de poids rapide</option>
-                    </select>
+                    <label>Objectif principal</label>
+                    <textarea class="form-control" rows="4" name="objectif_principal" placeholder="Décrivez vos objectifs pour cette séance (Ex: Focus fessiers, amélioration endurance...)"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label>Objectif principal (Optionnel)</label>
-                    <textarea class="form-control" rows="4" name="notes" placeholder="Ex: Je souhaite me concentrer sur le bas du corps..."></textarea>
-                </div>
-
-                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                        <span>Prix de la séance:</span>
-                        <strong style="color: var(--primary);">200 MAD</strong>
+                <div style="background: rgba(30, 215, 96, 0.05); padding: 18px; border-radius: 15px; border: 1px solid rgba(30, 215, 96, 0.2); margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 0.95rem; font-weight: 500;">Total à régler :</span>
+                        <strong style="color: var(--primary); font-size: 1.3rem;">200 MAD</strong>
                     </div>
-                    <small style="color: #666;">* Le paiement se fait après validation du coach.</small>
+                    <p style="color: #666; font-size: 0.75rem; margin-top: 5px;">* Séance individuelle soumise à validation du coach.</p>
                 </div>
 
                 <button type="submit" class="btn-submit">Confirmer la Réservation</button>
             </form>
         </section>
     </main>
-            <?php include_once __DIR__ .'/../../public/includs/footer.php'; ?>
 
-                <script src="../../public/js/navbar.js"></script>
-
+    <?php require_once __DIR__ .'/../../public/includs/footer.php'; ?>
+    <script src="../../public/js/navbar.js"></script>
 
 </body>
 </html>

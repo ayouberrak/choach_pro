@@ -7,10 +7,6 @@
     define('DB_USER',$env['DB_USER']);
     define('DB_PASS',$env['DB_PASS']);
     
-
-
-
-
 function conect(){
 
 
