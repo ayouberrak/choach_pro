@@ -16,7 +16,23 @@ function insertDispo($id_coach,$jour,$heures_debut,$heures_fin){
 }
 
 
-// function getDispo(){
-//     global $conn;
-//     $sql = "SELECT * "
-// }
+function getAllDispo($id_coach){
+    global $conn;
+    $sql = "SELECT * FROM disponible WHERE id_coach = :id";
+    $res = $conn->prepare($sql);
+    $res->execute([
+        'id'=>$id_coach
+    ]);
+    return $res->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+function deleteDispo($id_dispo){
+    global $conn;
+    $sql = "DELETE FROM disponible WHERE id_dispo=:id";
+    $res=$conn->prepare($sql);
+    return $res->execute([
+        'id'=>$id_dispo
+    ]);
+}
