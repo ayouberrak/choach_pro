@@ -25,7 +25,7 @@
         .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); letter-spacing: -1px; margin-bottom: 60px; display: flex; align-items: center; gap: 10px; }
         .logo span { background: var(--primary); color: #000; padding: 2px 8px; border-radius: 6px; }
         
-        .nav-link { padding: 16px 20px; color: var(--text-gray); text-decoration: none; border-radius: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 15px; transition: 0.4s; cursor: pointer; font-weight: 500; }
+        .nav-link { padding: 16px 20px; color: var(--text-gray); text-decoration: none; border-radius: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 15px; transition: 0.4s; font-weight: 500; }
         .nav-link:hover, .nav-link.active { background: rgba(30, 215, 96, 0.08); color: var(--primary); }
 
         /* --- Main Content --- */
@@ -85,12 +85,13 @@
 
     <aside class="sidebar">
         <div class="logo"><span>FIT</span> COACH</div>
-        <div class="nav-link active">🏠 Dashboard</div>
-        <div class="nav-link">🏋️ Mes Séances</div>
-        <div class="nav-link">💰 Portefeuille</div>
-        <div class="nav-link">👤 Mon Profil</div>
-        <a href="../controllers/logoutContrelleur.php"><div class="nav-link" style="margin-top: auto; color: #ff4d4d;">🚪 Déconnexion</div></a>
+        <a href="../controllers/coach.conttoleur.php" class="nav-link active">🏠 Dashboard</a>
+        <a href="../controllers/seances_coach.controlleur.php" class="nav-link">🏋️ Mes Séances</a>
+        <a href="../controllers/dispo.contorleurs.php" class="nav-link ">📅 Disponibilités</a>
+        <a href="#" class="nav-link">👤 Mon Profil</a>
+        <a href="../controllers/logoutContrelleur.php" class="nav-link" ><div  style="margin-top: auto; color: #ff4d4d; cursor: pointer;">🚪 Déconnexion</div></a>
     </aside>
+
 
     <main class="main-content">
         <div class="top-bar">
@@ -104,7 +105,7 @@
         </div>
 
         <div class="welcome-hero">
-            <h1>Bienvenue, <span>Coach Ahmed</span></h1>
+            <h1>Bienvenue, <span>Coach <?= $nom ?></span></h1>
             <p style="color: var(--text-gray);">Prêt pour vos prochaines séances de sport ?</p>
         </div>
 
@@ -136,8 +137,8 @@
                             <td><?= $res['dateandtime']?></td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="action-btn btn-check" onclick="confirmRow(this)" title="Confirmer">✓</button>
-                                    <button class="action-btn btn-x" onclick="deleteRow(this)" title="Supprimer">✕</button>
+                                    <a href="../controllers/accepteSeances.controleur.php?id=<?= $res['id_secances'] ?>"><button class="action-btn btn-check" onclick="confirmRow(this)" title="Confirmer">✓</button></a>
+                                    <a href="../controllers/refuseSeances.controleur.php?id=<?= $res['id_secances'] ?>"><button class="action-btn btn-x" onclick="deleteRow(this)" title="Supprimer">✕</button></a>
                                 </div>
                             </td>
                         </tr>
