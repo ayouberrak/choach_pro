@@ -80,10 +80,10 @@
 
     <aside class="sidebar">
         <div class="logo"><span>FIT</span> COACH</div>
-        <a href="../controllers/coach.conttoleur.php" class="nav-link">🏠 Dashboard</a>
+        <a href="../controllers/coach.conttoleur.php" class="nav-link ">🏠 Dashboard</a>
         <a href="../controllers/seances_coach.controlleur.php" class="nav-link active">🏋️ Mes Séances</a>
         <a href="../controllers/dispo.contorleurs.php" class="nav-link ">📅 Disponibilités</a>
-        <a href="#" class="nav-link">👤 Mon Profil</a>
+        <a href="../controllers/profile_coach.controleur.php" class="nav-link ">👤 Mon Profil</a>
         <a href="../controllers/logoutContrelleur.php" class="nav-link" ><div  style="margin-top: auto; color: #ff4d4d; cursor: pointer;">🚪 Déconnexion</div></a>
     </aside>
 

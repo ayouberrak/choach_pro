@@ -126,7 +126,7 @@
 
     <aside class="sidebar">
         <div class="logo"><span>FIT</span> COACH</div>
-        <a href="../controllers/coach.conttoleur.php" class="nav-link active">🏠 Dashboard</a>
+        <a href="../controllers/coach.conttoleur.php" class="nav-link">🏠 Dashboard</a>
         <a href="../controllers/seances_coach.controlleur.php" class="nav-link">🏋️ Mes Séances</a>
         <a href="../controllers/dispo.contorleurs.php" class="nav-link active ">📅 Disponibilités</a>
         <a href="../controllers/profile_coach.controleur.php" class="nav-link">👤 Mon Profil</a>
