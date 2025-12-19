@@ -13,7 +13,6 @@ if (isset($_POST['id_sport_active'])) {
     }
 }
 
-// رجّع JSON فقط
 header('Content-Type: application/json');
 echo json_encode($_SESSION['sports']);
-exit(); // ضروري باش ما يكملش باقي الكود
+exit();
