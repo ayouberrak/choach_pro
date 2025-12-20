@@ -3,123 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Réservations - FitCoach</title>
-    <link rel="stylesheet" href="../../public/includs/header.css">
-    <link rel="stylesheet" href="../../public/includs/footer.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Mes Réservations - FitCoach Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #1ed760; 
-            --bg-dark: #0a0a0a; 
-            --card-bg: #151515; 
+            --primary-glow: rgba(30, 215, 96, 0.3);
+            --bg-dark: #050505; 
+            --card-bg: rgba(18, 18, 18, 0.8); 
             --text-white: #ffffff;
-            --text-gray: #a0a0a0;
+            --text-gray: #b0b0b0;
             --danger: #ff4757;
             --warning: #ffa502;
+            --border: rgba(255, 255, 255, 0.08);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-white);
-            margin: 0;
-            padding-top: 100px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        /* --- Background Glow --- */
+        body::before {
+            content: ''; position: fixed; top: -10%; right: -10%; width: 400px; height: 400px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%); z-index: -1;
         }
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 120px auto 40px;
+            padding: 0 25px;
         }
 
-        .page-title {
-            margin-bottom: 30px;
-            border-left: 4px solid var(--primary);
-            padding-left: 15px;
+        .header-section {
+            margin-bottom: 45px;
+            position: relative;
         }
 
-        .page-title h2 { font-size: 1.8rem; margin: 0; }
-        .page-title p { color: var(--text-gray); font-size: 0.9rem; }
+        .header-section h2 { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            letter-spacing: -1.5px; 
+            text-transform: uppercase;
+        }
+        
+        .header-section h2 span {
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
 
-        /* --- Style dyal Table --- */
-        .table-container {
+        .header-section p { 
+            color: var(--text-gray); 
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        /* --- Table Styling (Elite Style) --- */
+        .table-wrapper {
             background: var(--card-bg);
-            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border-radius: 35px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             overflow: hidden;
-            border: 1px solid #222;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 12px; /* Had l-espace bin les lignes kiy-khliha tban nadiya */
             text-align: left;
         }
 
-        thead {
-            background: #1f1f1f;
-        }
-
         th {
-            padding: 20px;
-            font-size: 0.85rem;
+            padding: 15px 25px;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--primary);
+            letter-spacing: 2px;
+            color: var(--text-gray);
             font-weight: 700;
         }
 
-        td {
-            padding: 18px 20px;
-            border-bottom: 1px solid #222;
-            font-size: 0.9rem;
-            color: #eee;
+        tbody tr {
+            background: rgba(255, 255, 255, 0.02);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        tr:last-child td { border-bottom: none; }
-        tr:hover { background: rgba(30, 215, 96, 0.03); transition: 0.3s; }
+        tbody tr:hover {
+            background: rgba(30, 215, 96, 0.05);
+            transform: scale(1.01);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-        /* --- Status Badges --- */
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
+        td {
+            padding: 20px 25px;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td:first-child { border-left: 1px solid var(--border); border-radius: 20px 0 0 20px; }
+        td:last-child { border-right: 1px solid var(--border); border-radius: 0 20px 20px 0; }
+
+        /* --- Coach Info Style --- */
+        .coach-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coach-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), #111);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #000;
+            border: 2px solid #222;
+        }
+
+        .sport-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
             font-weight: 600;
+            color: #eee;
+            border: 1px solid var(--border);
+        }
+
+        /* --- Status Badge --- */
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             background: rgba(255, 165, 2, 0.1);
             color: var(--warning);
-            border: 1px solid var(--warning);
+            border: 1px solid rgba(255, 165, 2, 0.2);
+            display: inline-block;
         }
 
         /* --- Action Buttons --- */
+        .actions-flex {
+            display: flex;
+            gap: 10px;
+        }
+
         .btn-action {
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: 0.3s;
-            display: inline-flex;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid var(--border);
         }
 
-        .btn-edit {
-            background: rgba(30, 215, 96, 0.1);
-            color: var(--primary);
-            margin-right: 10px;
-        }
-        .btn-edit:hover { background: var(--primary); color: #000; }
+        .btn-edit { background: rgba(30, 215, 96, 0.1); color: var(--primary); }
+        .btn-edit:hover { background: var(--primary); color: #000; transform: translateY(-3px); }
 
-        .btn-delete {
-            background: rgba(255, 71, 87, 0.1);
-            color: var(--danger);
-        }
-        .btn-delete:hover { background: var(--danger); color: #fff; }
+        .btn-delete { background: rgba(255, 71, 87, 0.1); color: var(--danger); }
+        .btn-delete:hover { background: var(--danger); color: #fff; transform: translateY(-3px); }
 
-        @media (max-width: 900px) {
-            .table-container { overflow-x: auto; }
-            th, td { padding: 15px; min-width: 120px; }
+        @media (max-width: 1024px) {
+            .table-wrapper { overflow-x: auto; }
+            table { min-width: 900px; }
         }
     </style>
 </head>
@@ -127,58 +191,75 @@
     <?php include_once __DIR__ .'/../../public/includs/header.php'; ?>
 
     <main class="container">
-        <div class="page-title">
-            <h2>Mes Réservations</h2>
-            <p>Gérez vos séances et suivez vos progrès avec vos coachs.</p>
+        <div class="header-section">
+            <h2>Mes <span>Réservations</span></h2>
+            <p>Gérez vos séances et suivez votre évolution avec l'élite.</p>
         </div>
 
-        <div class="table-container">
+        <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
                         <th>Coach</th>
                         <th>Date de la séance</th>
-                        <th>Durée</th>
-                        <th>Heure Début</th>
+                        <th>Détails</th>
                         <th>Sport</th>
                         <th>Statut</th>
-                        <th>Actions</th>
+                        <th style="text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($reservation as $seances): ?>
-                        <tr>
-                            <td style="font-weight: 600; color: #fff;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div style="width: 35px; height: 35px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--primary); border: 1px solid var(--primary);">
-                                        <?= strtoupper(substr($seances['fullname'], 0, 1)) ?>
+                    <?php if(!empty($reservation)): ?>
+                        <?php foreach($reservation as $seances): ?>
+                            <tr>
+                                <td>
+                                    <div class="coach-info">
+                                        <div class="coach-avatar">
+                                            <?= strtoupper(substr($seances['fullname'], 0, 1)) ?>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 700; color: #fff;"><?= htmlspecialchars($seances['fullname']) ?></div>
+                                            <div style="font-size: 0.75rem; color: var(--text-gray);">Coach Certifié</div>
+                                        </div>
                                     </div>
-                                    <?= htmlspecialchars($seances['fullname']) ?>
-                                </div>
-                            </td>
-                            <td class="js-date-formatter" data-raw-date="<?= $seances['date_seances'] ?>">
-                                <?= htmlspecialchars($seances['date_seances']) ?>
-                            </td>
-                            <td><span style="color: var(--text-gray);"><?= htmlspecialchars($seances['duree']) ?> min</span></td>
-                            <td><strong><?= htmlspecialchars($seances['debut']) ?></strong></td>
-                            <td>
-                                <span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;">
-                                    <?= htmlspecialchars($seances['id_sport']) ?>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="status-badge">En attente</span>
-                            </td>
-                            <td>
-                                <a href="edit_reservation.php?id=<?= $seances['id_secances'] ?>" class="btn-action btn-edit">
-                                    ✏️ Modifier
-                                </a>
-                                <a href="delete_reservation.php?id=<?= $seances['id_secances'] ?>" class="btn-action btn-delete" onclick="return confirm('Voulez-vous vraiment annuler?')">
-                                    🗑️ Supprimer
-                                </a>
+                                </td>
+                                <td>
+                                    <div class="js-date-formatter" data-raw-date="<?= $seances['date_seances'] ?>" style="font-weight: 600;">
+                                        <?= htmlspecialchars($seances['date_seances']) ?>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: var(--primary);">🕒 <?= htmlspecialchars($seances['debut']) ?></div>
+                                </td>
+                                <td>
+                                    <div style="color: #fff; font-weight: 500;"><?= htmlspecialchars($seances['duree']) ?> Min</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-gray);">Session Intensive</div>
+                                </td>
+                                <td>
+                                    <span class="sport-tag">
+                                        <?= htmlspecialchars($seances['id_sport']) ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status-badge">En attente</span>
+                                </td>
+                                <td>
+                                    <div class="actions-flex" style="justify-content: center;">
+                                        <a href="edit_reservation.php?id=<?= $seances['id_secances'] ?>" class="btn-action btn-edit" title="Modifier">
+                                            ✏️
+                                        </a>
+                                        <a href="delete_reservation.php?id=<?= $seances['id_secances'] ?>" class="btn-action btn-delete" title="Annuler" onclick="return confirm('Voulez-vous vraiment annuler?')">
+                                            🗑️
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 50px; color: var(--text-gray);">
+                                🚀 Aucune réservation pour le moment.
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -186,23 +267,15 @@
 
     <?php include_once __DIR__ .'/../../public/includs/footer.php'; ?>
     
-    <script src="../../public/js/navbar.js" defer></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // N-cheddo ga3 les cellules li fihom date
             const dateCells = document.querySelectorAll('.js-date-formatter');
-            
             dateCells.forEach(cell => {
                 let sqlDate = cell.getAttribute('data-raw-date');
                 if (sqlDate) {
                     let dateObj = new Date(sqlDate);
-                    
-                    // Options dial l-formatage (français)
-                    let options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+                    let options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
                     let formatted = dateObj.toLocaleDateString('fr-FR', options);
-                    
-                    // N-upper-i l-7erf l-awel
                     cell.innerText = formatted.charAt(0).toUpperCase() + formatted.slice(1);
                 }
             });
