@@ -18,11 +18,26 @@ function insertseances($debut,$duree,$id_client,$id_coach,$id_sport,$date_seance
         'date_seances'=>$date_seances
     ]);
 }
+function insertseancesavecstatusaccepte($debut,$duree,$id_client,$id_coach,$id_sport,$date_seances){
+    global $conn;
+    $sql = "INSERT INTO seances(debut,duree,id_client,id_coach,id_sport,date_seances,id_status)
+            VALUES(:debut,:duree,:id_client,:id_coach,:id_sport,:date_seances,6)";
+    $stmt= $conn->prepare($sql);
+    return $stmt->execute([
+        'debut'=>$debut,
+        'duree'=>$duree,
+        'id_client'=>$id_client,
+        'id_coach'=>$id_coach,
+        'id_sport'=>$id_sport,
+        'date_seances'=>$date_seances
+    ]);
+}
 
 function getseances($id_client){
     global $conn;
-    $sql ="SELECT CONCAT(u.nom,' ',u.prenom) AS fullname , s.* , st.type_status, st.style FROM seances s 
-    INNER JOIN user u ON u.id = s.id_coach INNER JOIN status st ON st.id_status = s.id_status WHERE s.id_client=:id";
+    $sql ="SELECT CONCAT(u.nom,' ',u.prenom) AS fullname , s.* , st.type_status, st.style, sp.type FROM seances s 
+    INNER JOIN user u ON u.id = s.id_coach INNER JOIN status st ON st.id_status = s.id_status 
+    INNER JOIN sport sp ON sp.id_sport = s.id_sport WHERE s.id_client=:id";
     $stmt= $conn->prepare($sql);
     $stmt->execute([
         'id'=>$id_client
@@ -86,4 +101,39 @@ function updateAllSeancesTerminer(){
 
     $rtes= $conn->prepare($sql);
     return $rtes->execute();
+}
+
+
+
+function updateSeancesEnattente($id_secances){
+    global $conn;
+    $sql = "UPDATE seances SET id_status = 9 where id_secances =:id_secances AND id_status = 5";
+    $res = $conn ->prepare($sql);
+    return $res->execute([
+        'id_secances'=>$id_secances
+    ]);
+}
+
+function updatesaeacnes($id_secances,$debut,$duree,$date_seances,$id_sport){
+    global $conn;
+    $sql = "UPDATE seances SET debut=:debut , duree=:duree , date_seances=:date_seances , id_sport=:id_sport
+            where id_secances =:id_secances";
+    $res = $conn ->prepare($sql);
+    return $res->execute([
+        'debut'=>$debut,
+        'duree'=>$duree,
+        'date_seances'=>$date_seances,
+        'id_sport'=>$id_sport,
+        'id_secances'=>$id_secances
+    ]);
+}
+
+function getSeanceById($id_secances){
+    global $conn;
+    $sql = "SELECT * FROM seances WHERE id_secances = :id_secances";
+    $res = $conn->prepare($sql);
+    $res->execute([
+        'id_secances'=>$id_secances
+    ]);
+    return $res->fetch(PDO::FETCH_ASSOC);
 }

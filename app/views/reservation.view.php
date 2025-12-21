@@ -6,7 +6,7 @@
     <title>Réserver votre séance - FitCoach Elite</title>
     <link rel="stylesheet" href="../../public/includs/header.css">
     <link rel="stylesheet" href="../../public/includs/footer.css">
-        <script src="../../public/js/navbar.js" defer></script>
+    <script src="../../public/js/navbar.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -107,29 +107,34 @@
             <form action="" method="POST">
                 
                 <div class="availability-section">
-                    <h4>📅 Créneaux disponibles</h4>
+                    <h4>📅 Créneaux disponibles du coach</h4>
                     <div class="slots-grid">
                         <?php if(!empty($diaponibilites)): ?>
                             <?php foreach($diaponibilites as $dispo): ?>
                                 <label class="slot-card" onclick="selectSlot(this)">
-                                    <input type="radio" name="id_dispo" value="<?= $dispo['id_dispo'] ?>" style="display:none;" required>
+                                    <input type="radio" name="id_dispo" value="<?= $dispo['id_dispo'] ?>" 
+                                           data-date="<?= $dispo['jour'] ?>" 
+                                           data-time="<?= date('H:i', strtotime($dispo['heures_debut'])) ?>" 
+                                           style="display:none;" required>
                                     <span class="date"><?= date('d M', strtotime($dispo['jour'])) ?></span>
                                     <span class="time"><?= date('H:i', strtotime($dispo['heures_debut'])) ?></span>
                                 </label>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p style="color: var(--text-gray); font-size: 0.8rem;">Aucun créneau disponible pour le moment.</p>
+                            <p style="color: var(--text-gray); font-size: 0.8rem; grid-column: 1/-1; text-align: center; padding: 20px;">
+                                Aucun créneau disponible pour le moment.
+                            </p>
                         <?php endif; ?>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group">
-                        <label>Date souhaitée (Vérification)</label>
+                        <label>Date de la séance</label>
                         <input type="date" class="form-control" name="date_debut" required id="selected_date">
                     </div>
                     <div class="form-group">
-                        <label>Heure</label>
+                        <label>Heure de début</label>
                         <input type="time" class="form-control" name="heure_debut" required id="selected_time">
                     </div>
                 </div>
@@ -144,8 +149,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Discipline</label>
+                        <label>Discipline sportive</label>
                         <select class="form-control" name="type_sport" required>
+                            <option value="" disabled selected>Choisir le sport</option>
                             <?php foreach($sport as $sp): ?>    
                                 <option value="<?= $sp['sport_id'] ?>"><?= $sp['type'] ?></option>
                             <?php endforeach?>
@@ -154,16 +160,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Notes ou Objectifs</label>
-                    <textarea class="form-control" rows="3" name="objectif_principal" placeholder="Ex: Focus cardio, rééducation genou..."></textarea>
+                    <label>Objectifs de la session</label>
+                    <textarea class="form-control" rows="3" name="objectif_principal" placeholder="Décrivez brièvement ce que vous souhaitez travailler..."></textarea>
                 </div>
 
-                <div style="background: rgba(30, 215, 96, 0.05); padding: 25px; border-radius: 20px; border: 1px solid rgba(30, 215, 96, 0.2); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="background: rgba(30, 215, 96, 0.05); padding: 25px; border-radius: 20px; border: 1px solid rgba(30, 215, 96, 0.2); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                     <div>
-                        <span style="display:block; font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase;">Prix de la séance</span>
-                        <strong style="color: var(--primary); font-size: 1.8rem;">200 MAD</strong>
+                        <span style="display:block; font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px;">Tarif de la session</span>
+                        <strong style="color: var(--primary); font-size: 2rem;">200 MAD</strong>
                     </div>
-                    <button type="submit" class="btn-submit" style="width: auto; padding: 15px 40px; margin: 0;">Réserver</button>
+                    <button type="submit" class="btn-submit" style="width: auto; padding: 18px 50px; margin: 0;">Confirmer la réservation</button>
                 </div>
             </form>
         </section>
@@ -173,14 +179,27 @@
 
     <script>
         function selectSlot(element) {
-=            document.querySelectorAll('.slot-card').forEach(slot => {
+            // 1. Remove selection from all cards
+            document.querySelectorAll('.slot-card').forEach(slot => {
                 slot.classList.remove('selected');
             });
-            
-            element.classList.add('selected');
-            
 
+            // 2. Add selected class to the clicked one
+            element.classList.add('selected');
+
+            // 3. Set the radio button as checked
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+
+            // 4. Extract data from radio attributes
+            const dateValue = radio.getAttribute('data-date');
+            const timeValue = radio.getAttribute('data-time');
+
+            // 5. Auto-fill the inputs below
+            document.getElementById('selected_date').value = dateValue;
+            document.getElementById('selected_time').value = timeValue;
         }
+
     </script>
 </body>
 </html>

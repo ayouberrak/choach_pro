@@ -14,4 +14,5 @@ $reservation = getseances($id_client);
 
 // print_r($reservation);
 
+
 require_once __DIR__ ."/../views/mes_seances.view.php";

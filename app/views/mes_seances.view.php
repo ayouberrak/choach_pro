@@ -163,6 +163,7 @@
         .status-pending { background: rgba(255, 165, 2, 0.1); color: var(--warning); border: 1px solid rgba(255, 165, 2, 0.2); }
         .status-finished { background: rgba(0, 210, 255, 0.1); color: var(--info); border: 1px solid rgba(0, 210, 255, 0.2); }
         .status-refused { background: rgba(255, 77, 77, 0.1); color: var(--danger); border: 1px solid rgba(255, 77, 77, 0.2); }
+        .status-cancelled {background: rgba(108, 117, 125, 0.1);color: #6c757d;border: 1px solid rgba(108, 117, 125, 0.2);}
 
 
         /* --- Action Buttons --- */
@@ -243,7 +244,7 @@
                                 </td>
                                 <td>
                                     <span class="sport-tag">
-                                        <?= htmlspecialchars($seances['id_sport']) ?>
+                                        <?= $seances['type'] ?>
                                     </span>
                                 </td>
                                 <td>
@@ -285,6 +286,15 @@
                     let options = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
                     let formatted = dateObj.toLocaleDateString('fr-FR', options);
                     cell.innerText = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+                }
+            });
+
+            const status = document.querySelectorAll('.status-badge');
+            const action = document.querySelectorAll('.actions-flex');
+
+            status.forEach((st, index) => {
+                if (st.innerText.trim().toLowerCase() !== 'en attente') {
+                    action[index].style.display = 'none';
                 }
             });
         });

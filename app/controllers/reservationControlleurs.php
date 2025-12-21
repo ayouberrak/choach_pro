@@ -30,25 +30,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $duree = $_POST['duree'] ?? null;
     $type_sport = $_POST['type_sport'] ?? null;
 
+    $id_dispo=$_POST['id_dispo'] ?? null;
+
     if (!$date_debut || !$heure_debut || !$duree || !$type_sport) {
         die("Tous les champs sont requis.");
     }
 
-    $val = insertseances(
-        $heure_debut,
-        $duree,
-        $id_client,
-        $id_coach,
-        $type_sport,
-        $date_debut
-    );
 
-    if ($val === true) {
-        header("Location: reservationControlleurs.php?id=$id_coach&reserver=yes");
-        exit;
-    } else {
-        header('Location: reservationControlleurs.php?reserver=no');
+    if ($id_dispo) {
+        $dispo = getDispoById($id_dispo);
+        if ($dispo) {
+            $date_debut = $dispo['jour'];
+            $heure_debut = $dispo['heures_debut'];
+            insertseancesavecstatusaccepte(
+                $heure_debut,
+                $duree,
+                $id_client,
+                $id_coach,
+                $type_sport,
+                $date_debut
+            );
+            deleteDispo($id_dispo);
+            header("Location: reservationControlleurs.php?id=$id_coach&reserver=yes");
+            exit();
+        }
+    }else{
+        $val = insertseances(
+            $heure_debut,
+            $duree,
+            $id_client,
+            $id_coach,
+            $type_sport,
+            $date_debut
+        );
+        if ($val === true) {
+            header("Location: reservationControlleurs.php?id=$id_coach&reserver=yes");
+            exit;
+        } else {
+            header('Location: reservationControlleurs.php?reserver=no');
+        }
+        
     }
+
+    
+   
+
+
 }
 
 $sport = getSportBycoach($id_coach);

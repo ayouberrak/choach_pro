@@ -36,3 +36,15 @@ function deleteDispo($id_dispo){
         'id'=>$id_dispo
     ]);
 }
+
+
+function getDispoById($id_dispo){
+    global $conn;
+    $sql = "SELECT * FROM disponible WHERE id_dispo = :id";
+    $res = $conn->prepare($sql);
+    $res->execute([
+        'id'=>$id_dispo
+    ]);
+    return $res->fetch(PDO::FETCH_ASSOC);
+}
+
