@@ -8,6 +8,7 @@ require_once __DIR__ ."/../config/config.php";
 require_once __DIR__ ."/../models/coach.model.php";
 require_once __DIR__ .'/../models/seacnes.model.php';
 require_once __DIR__ .'/../models/sport.models.php';
+require_once __DIR__ .'/../models/dispo.models.php';
 
 
 $conn = conn();
@@ -52,6 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $sport = getSportBycoach($id_coach);
 
-
+$diaponibilites = getAllDispo($id_coach);
 
 require_once __DIR__ ."/../views/reservation.view.php";

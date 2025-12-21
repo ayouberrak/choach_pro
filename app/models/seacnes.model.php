@@ -21,7 +21,8 @@ function insertseances($debut,$duree,$id_client,$id_coach,$id_sport,$date_seance
 
 function getseances($id_client){
     global $conn;
-    $sql ="SELECT CONCAT(u.nom,' ',u.prenom) AS fullname , s.* FROM seances s INNER JOIN user u ON u.id = s.id_coach WHERE s.id_client=:id";
+    $sql ="SELECT CONCAT(u.nom,' ',u.prenom) AS fullname , s.* , st.type_status, st.style FROM seances s 
+    INNER JOIN user u ON u.id = s.id_coach INNER JOIN status st ON st.id_status = s.id_status WHERE s.id_client=:id";
     $stmt= $conn->prepare($sql);
     $stmt->execute([
         'id'=>$id_client
@@ -70,4 +71,19 @@ function updateStatusSeances($id_secances,$status){
         'status'=>$status,
         'id_secances'=>$id_secances
     ]);
+}
+
+
+function updateAllSeancesTerminer(){
+    global $conn;
+
+    $sql = "
+        UPDATE seances 
+        SET id_status = 8 
+        WHERE date_seances <= NOW()
+        AND id_status != 8
+    ";
+
+    $rtes= $conn->prepare($sql);
+    return $rtes->execute();
 }

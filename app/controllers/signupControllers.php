@@ -69,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $_SESSION['user_id'] = $userId;
             $_SESSION['user_role'] = $role;
+            $_SESSION['user_name'] = $nom . ' ' . $prenom;
+
 
         header("Location: selectsportControleurs.php?success=1");
         exit();

@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 
 $id_client =$_SESSION['user_id'];
+// echo$id_client;
 
 require_once __DIR__ . "/../models/seacnes.model.php";
 

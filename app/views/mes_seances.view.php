@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Réservations - FitCoach Elite</title>
+    <link rel="stylesheet" href="../../public/includs/header.css">
+    <link rel="stylesheet" href="../../public/includs/footer.css">
+        <script src="../../public/js/navbar.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -156,6 +159,11 @@
             border: 1px solid rgba(255, 165, 2, 0.2);
             display: inline-block;
         }
+        .status-accepted { background: rgba(30, 215, 96, 0.1); color: var(--primary); border: 1px solid rgba(30, 215, 96, 0.2); }
+        .status-pending { background: rgba(255, 165, 2, 0.1); color: var(--warning); border: 1px solid rgba(255, 165, 2, 0.2); }
+        .status-finished { background: rgba(0, 210, 255, 0.1); color: var(--info); border: 1px solid rgba(0, 210, 255, 0.2); }
+        .status-refused { background: rgba(255, 77, 77, 0.1); color: var(--danger); border: 1px solid rgba(255, 77, 77, 0.2); }
+
 
         /* --- Action Buttons --- */
         .actions-flex {
@@ -239,7 +247,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="status-badge">En attente</span>
+                                    <span class="status-badge <?= htmlspecialchars($seances['style']) ?>"><?= htmlspecialchars($seances['type_status']) ?></span>
                                 </td>
                                 <td>
                                     <div class="actions-flex" style="justify-content: center;">
